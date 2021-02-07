@@ -6,26 +6,25 @@
  *         registering a new user.
  */
 
-using BusinessObjects;
+using BusinessObjects.User;
 using Logic.Validations;
 
 namespace Logic.Application
 {
     public static class NewUserController
     {
-        public static void NewUserRegistration(string username, string password, string apikey)
+        public static bool Registration(IUser user)
         {
-            //check if the username and password are valid
-            //These two methods will throw an exception caught
-            //that must be caught in presentation
-            NewUserValidations.Username(username);
-            NewUserValidations.Password(password);
+            //Validate data from user
+            //If the data is not valid it will throw an exception
+            bool validator = ValidateUser.Validate(user);
 
-            //Create a new instance of the User class
-            var newUser = new User(username, password, apikey);
-
-            //Save user to database
+            if (validator == false) return false;
             
+            //Save user to database    
+            var userDb = DBManager.Factory.InitializeUserDb();
+            userDb.Insert(user);
+            return true;
         }
     }
 }

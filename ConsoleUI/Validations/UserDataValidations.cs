@@ -1,8 +1,15 @@
-﻿using System.Text.RegularExpressions;
+﻿/*
+ * Author: Ricardo Sampaio
+ * Email: ricardo_cs@outlook.pt
+ * Date: 07/02/2021
+ * Resume: This file contains a class that validates user data(password, username...)
+ */
 
-namespace Logic.Validations
+using System.Text.RegularExpressions;
+
+namespace ConsoleUI.Validations
 {
-    public static class NewUserValidations
+    public static class UserDataValidations
     {
         public static bool Username(string username)
         {

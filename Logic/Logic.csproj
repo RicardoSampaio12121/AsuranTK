@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj" />
+      <ProjectReference Include="..\DBManager\DBManager.csproj" />
       <ProjectReference Include="..\Exceptions\Exceptions.csproj" />
     </ItemGroup>
 
