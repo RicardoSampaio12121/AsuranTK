@@ -6,7 +6,6 @@
  */
 
 using System;
-using BusinessObjects.User;
 
 namespace ConsoleUI
 {

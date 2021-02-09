@@ -6,8 +6,11 @@
  *         registering a new user.
  */
 
+using System;
 using BusinessObjects.User;
 using Logic.Validations;
+using Exceptions;
+using MySql.Data.MySqlClient;
 
 namespace Logic.Application
 {
@@ -17,13 +20,33 @@ namespace Logic.Application
         {
             //Validate data from user
             //If the data is not valid it will throw an exception
-            bool validator = ValidateUser.Validate(user);
-
-            if (validator == false) return false;
+            if (Validations.NewUserValidations.Username(user.Username) == false)
+            {
+                throw new InvalidUsernameException("INVALID USERNAME: username must contain only letters and numbers!");
+            }
+            if (Validations.NewUserValidations.Password(user.Password) == false)
+            {
+                throw new InvalidUserPasswordException("INVALID PASSWORD: password must be between 8 and 20 characters long!");
+            }
             
-            //Save user to database    
+            //Initializes a DBManager instance   
             var userDb = DBManager.Factory.InitializeUserDb();
-            userDb.Insert(user);
+            
+            //TODO check if there any member in the database with the same username, if there is
+            //TODO this process won't proceed
+            
+            
+            //Tries to insert the user in the database
+            //If it can't, exception will be caught in the presentation layer
+            try
+            {
+                userDb.Insert(user);
+            }
+            catch(NullReferenceException ex)
+            {
+                //This exception is being caught here because there's a bug in mysql that will always throw this exception
+                //Nothing is being done with it
+            }
             return true;
         }
     }

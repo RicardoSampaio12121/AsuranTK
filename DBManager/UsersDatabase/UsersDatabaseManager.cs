@@ -1,4 +1,8 @@
-﻿using BusinessObjects.User;
+﻿using System;
+using System.Data;
+using BusinessObjects.User;
+using Exceptions;
+using MySql.Data.MySqlClient;
 
 namespace DBManager.UsersDatabase
 {
@@ -16,9 +20,33 @@ namespace DBManager.UsersDatabase
             sqlCommand.Parameters.AddWithValue("@pass", user.Password);
             sqlCommand.Parameters.AddWithValue("@api", user.Apikey);
             
-            sqlConnection.Open();
-            sqlCommand.ExecuteNonQuery();
-            sqlConnection.Close();
+            //Tries to open the database connection
+            try
+            {
+                sqlConnection.Open();
+            }
+            catch (Exception ex)
+            {
+                throw new OpenDatabaseException();
+            }
+            
+            //Tries to execute the command
+            try
+            {
+                sqlCommand.Prepare();
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                throw new ExecuteNonQueryException("could not insert user into database.", ex);
+            }
+            finally //Closes the connection no matter what
+            {
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    sqlConnection.Close();
+                }
+            }
         }
     }
 }
