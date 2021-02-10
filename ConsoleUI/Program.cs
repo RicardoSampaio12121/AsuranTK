@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq.Expressions;
 using BusinessObjects.User;
 using ConsoleUI.Validations;
+using DBManager;
 using Exceptions;
 using Logic.Application;
 using MySql.Data.MySqlClient;
@@ -44,6 +46,13 @@ namespace ConsoleUI
                     try
                     {
                         userValidator = NewUserController.Registration(newUser);
+                        if (userValidator == false)
+                        {
+                            StandardMessages.UsernameInUse(newUser.Username);
+                            StandardMessages.PressKeyContinueMessage();
+                            Console.ReadKey();
+                            break;
+                        }
                     }
                     catch (Exception ex) //If it can't, registration process won't proceed
                     {
@@ -52,6 +61,8 @@ namespace ConsoleUI
                         Console.ReadKey();
                         break;
                     }
+                    
+                    
                     
                     //Writes a message saying the user was created
                     StandardMessages.UserCreatedSuccessfully();

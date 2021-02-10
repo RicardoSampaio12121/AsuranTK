@@ -15,9 +15,9 @@ namespace DBManager
             return new MySqlCommand(query, con);
         }
 
-        public static UsersDatabaseManagers InitializeUserDb()
+        public static InsertUser InitializeInsertUser()
         {
-            return new UsersDatabaseManagers();
+            return new InsertUser();
         }
     }
 }

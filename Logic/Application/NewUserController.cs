@@ -10,7 +10,6 @@ using System;
 using BusinessObjects.User;
 using Logic.Validations;
 using Exceptions;
-using MySql.Data.MySqlClient;
 
 namespace Logic.Application
 {
@@ -30,23 +29,22 @@ namespace Logic.Application
             }
             
             //Initializes a DBManager instance   
-            var userDb = DBManager.Factory.InitializeUserDb();
-            
-            //TODO check if there any member in the database with the same username, if there is
-            //TODO this process won't proceed
-            
+            var userDb = DBManager.Factory.InitializeInsertUser();
+
+            //Check if there is any user with the same username
+            //if there is, return false to UI
+            bool exists = userDb.CheckIfUserInDatabaseByUsername(user.Username);
+
+            if (exists == true)
+            {
+                return false;
+            }
             
             //Tries to insert the user in the database
             //If it can't, exception will be caught in the presentation layer
-            try
-            {
-                userDb.Insert(user);
-            }
-            catch(NullReferenceException ex)
-            {
-                //This exception is being caught here because there's a bug in mysql that will always throw this exception
-                //Nothing is being done with it
-            }
+            userDb.Insert(user);
+           
+           
             return true;
         }
     }

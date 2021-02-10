@@ -24,5 +24,10 @@ namespace ConsoleUI
         {
             Console.WriteLine("New user successfully created!");
         }
+
+        public static void UsernameInUse(string username)
+        {
+            Console.WriteLine($"Username {username} is already in use.");
+        }
     }
 }
