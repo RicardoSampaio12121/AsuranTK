@@ -1,4 +1,6 @@
 ﻿using DBManager.UsersDatabase;
+using DBManager.UsersDatabase.Insert;
+using DBManager.UsersDatabase.Inspection;
 using MySql.Data.MySqlClient;
 
 namespace DBManager
@@ -15,9 +17,14 @@ namespace DBManager
             return new MySqlCommand(query, con);
         }
 
-        public static InsertUser InitializeInsertUser()
+        public static IInsertUser InitializeUsersDbInsert()
         {
             return new InsertUser();
+        }
+
+        public static IInspection InitializeUsersDbInspection()
+        {
+            return new Inspection();
         }
     }
 }

@@ -10,6 +10,7 @@ using System;
 using BusinessObjects.User;
 using Logic.Validations;
 using Exceptions;
+using DBManager;
 
 namespace Logic.Application
 {
@@ -29,11 +30,12 @@ namespace Logic.Application
             }
             
             //Initializes a DBManager instance   
-            var userDb = DBManager.Factory.InitializeInsertUser();
-
+            var usersDbInsert = DBManager.Factory.InitializeUsersDbInsert();
+            var usersDbInspect = DBManager.Factory.InitializeUsersDbInspection();
+    
             //Check if there is any user with the same username
             //if there is, return false to UI
-            bool exists = userDb.CheckIfUserInDatabaseByUsername(user.Username);
+            bool exists = usersDbInspect.CheckIfUserInDatabaseByUsername(user.Username);
 
             if (exists == true)
             {
@@ -42,7 +44,7 @@ namespace Logic.Application
             
             //Tries to insert the user in the database
             //If it can't, exception will be caught in the presentation layer
-            userDb.Insert(user);
+            usersDbInsert.Insert(user);
            
            
             return true;

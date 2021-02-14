@@ -14,14 +14,40 @@ namespace ConsoleUI
     {
         private static void Main()
         {
+            bool logged = false;
+            
             Menus.LoginRegistationMenu();
             int decision = GetMenuDecision.ExpectIntegerMenu(1, 2); 
             
             switch (decision)
             {
                 case 1: //Login process
+                    Console.Clear();
+                    //Gather username and password
+                    string username, password;
+                    (username, password) = UserData.GatherLoginData();
+
                     
-                    
+                    try
+                    {
+                        var login = LoginController.Login(username, password);
+
+                        if (login == true)
+                        {
+                            logged = true;
+                        }
+                        else
+                        {
+                            StandardMessages.FailedLogin();
+                            StandardMessages.PressKeyContinueMessage();
+                            Console.ReadKey();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"ERROR: {ex.Message}");
+                    }
+
                     break;
                 case 2: //Registration process
                 {   
@@ -29,7 +55,7 @@ namespace ConsoleUI
                     IUser newUser = BusinessObjects.Factory.CreateUser();
                     
                     //Gather data from the user
-                    newUser = UserData.Gather(newUser);
+                    newUser = UserData.GatherNewUserData(newUser);
                 
                     //Validates data given from the user
                     bool userValidator = ValidateUser.Validate(newUser);
@@ -62,8 +88,6 @@ namespace ConsoleUI
                         break;
                     }
                     
-                    
-                    
                     //Writes a message saying the user was created
                     StandardMessages.UserCreatedSuccessfully();
                     StandardMessages.PressKeyContinueMessage();
@@ -71,6 +95,11 @@ namespace ConsoleUI
 
                     break;
                 }
+            }
+
+            if (logged == true)
+            {
+                
             }
         }
     }

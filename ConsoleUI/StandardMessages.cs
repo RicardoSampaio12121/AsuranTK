@@ -29,5 +29,10 @@ namespace ConsoleUI
         {
             Console.WriteLine($"Username {username} is already in use.");
         }
+
+        public static void FailedLogin()
+        {
+            Console.WriteLine("Unsuccessful login");
+        }
     }
 }

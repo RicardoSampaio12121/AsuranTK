@@ -2,11 +2,9 @@
 using System.Data;
 using BusinessObjects.User;
 using Exceptions;
-using MySql.Data.MySqlClient;
 
-namespace DBManager.UsersDatabase
+namespace DBManager.UsersDatabase.Insert
 {
-    
     public class InsertUser : IInsertUser
     {
         public void Insert(IUser user)
@@ -47,45 +45,6 @@ namespace DBManager.UsersDatabase
                     sqlConnection.Close();
                 }
             }
-        }
-
-        public bool CheckIfUserInDatabaseByUsername(string username)
-        {
-            using var sqlConnection = Factory.NewSqlConnection(ConnectionStrings.UsersConString);
-            using var sqlCommand =
-                Factory.NewSqlCommand(UsersSqlQueries.CheckIfUsernameIsInDatabaseQuery, sqlConnection);
-
-            sqlCommand.Parameters.AddWithValue("@user", username);
-
-            try
-            {
-                sqlConnection.Open();
-            }
-            catch (Exception)
-            {
-                throw new OpenDatabaseException();
-            }
-            
-            try
-            {
-                sqlCommand.Prepare();
-                var result = sqlCommand.ExecuteScalar();
-                if (result.ToString() != "0")
-                {
-                    return true;
-                }
-            }
-            finally
-            {
-                if (sqlConnection.State == ConnectionState.Open)
-                {
-                    sqlConnection.Close();
-                }
-                sqlCommand.Dispose();
-                sqlConnection.Dispose();
-            }
-
-            return false;
         }
     }
 }
