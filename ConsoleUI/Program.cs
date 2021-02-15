@@ -7,6 +7,11 @@ using Exceptions;
 using Logic.Application;
 using MySql.Data.MySqlClient;
 using ValidateUser = ConsoleUI.Validations.ValidateUser;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+
 
 namespace ConsoleUI
 {
@@ -27,7 +32,7 @@ namespace ConsoleUI
                     string username, password;
                     (username, password) = UserData.GatherLoginData();
 
-                    
+                
                     try
                     {
                         var login = LoginController.Login(username, password);
@@ -99,7 +104,10 @@ namespace ConsoleUI
 
             if (logged == true)
             {
-                
+                string apiKey = "35D002B7-3426-A947-9C4D-16CDE1431D42D515E25E-AEEE-4227-A204-9BDEEE0B25E2";
+                TestController.Test(apiKey);
+
+
             }
         }
     }

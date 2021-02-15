@@ -8,6 +8,7 @@
       <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj" />
       <ProjectReference Include="..\DBManager\DBManager.csproj" />
       <ProjectReference Include="..\Exceptions\Exceptions.csproj" />
+      <ProjectReference Include="..\GW2Wrapper\GW2Wrapper.csproj" />
     </ItemGroup>
 
 </Project>
