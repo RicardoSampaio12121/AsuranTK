@@ -29,5 +29,11 @@ namespace ConsoleUI
             
             return (username, password);
         }
+
+        public static string GatherCommand()
+        {
+            Console.Write("% ");
+            return Console.ReadLine();
+        }
     }
 }

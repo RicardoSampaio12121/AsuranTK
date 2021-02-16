@@ -1,4 +1,5 @@
 ﻿using DBManager.UsersDatabase;
+using DBManager.UsersDatabase.Get;
 using DBManager.UsersDatabase.Insert;
 using DBManager.UsersDatabase.Inspection;
 using MySql.Data.MySqlClient;
@@ -25,6 +26,11 @@ namespace DBManager
         public static IInspection InitializeUsersDbInspection()
         {
             return new Inspection();
+        }
+
+        public static IGet InitializeUserDbGet()
+        {
+            return new Get();
         }
     }
 }

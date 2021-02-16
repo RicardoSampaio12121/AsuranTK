@@ -7,10 +7,10 @@ using Exceptions;
 using Logic.Application;
 using MySql.Data.MySqlClient;
 using ValidateUser = ConsoleUI.Validations.ValidateUser;
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using Factory = BusinessObjects.Factory;
 
 
 namespace ConsoleUI
@@ -20,6 +20,7 @@ namespace ConsoleUI
         private static void Main()
         {
             bool logged = false;
+            IUser loggedUser = Factory.CreateUser();
             
             Menus.LoginRegistationMenu();
             int decision = GetMenuDecision.ExpectIntegerMenu(1, 2); 
@@ -35,8 +36,10 @@ namespace ConsoleUI
                 
                     try
                     {
-                        var login = LoginController.Login(username, password);
+                        var values = LoginController.Login(username, password);
 
+                        bool login = values.success;
+                        loggedUser = values.user;
                         if (login == true)
                         {
                             logged = true;
@@ -102,13 +105,26 @@ namespace ConsoleUI
                 }
             }
 
-            if (logged == true)
-            {
-                string apiKey = "35D002B7-3426-A947-9C4D-16CDE1431D42D515E25E-AEEE-4227-A204-9BDEEE0B25E2";
-                TestController.Test(apiKey);
-
-
-            }
+            if (logged != true) return; //Inverted if to reduce nesting
+            //UserData.GatherCommand();
+            
+            
+            
+            string apiKey = loggedUser.Apikey;
+            //TestController.Test(apiKey);
+            
+            /*HttpClient _client = new HttpClient();
+            
+            _client.DefaultRequestHeaders.Clear();
+            //_client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
+            
+            string requestUri = @"http://www.gw2spidy.com/api/v0.9/json/item-search/Mystic%20Coin";
+            var stringTask = _client.GetAsync(requestUri);
+            stringTask.Wait();
+            var result = stringTask.Result;
+            Console.WriteLine(result.Content.ReadAsStringAsync().Result);*/
+            
+            TestController.Test("Mystic Coin");
         }
     }
 }

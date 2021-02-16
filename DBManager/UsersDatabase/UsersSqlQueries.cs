@@ -7,5 +7,7 @@
 
         public const string ConfirmPasswordFromUsername =
             "SELECT COUNT(*) FROM users WHERE username = @user AND password = @pass";
+
+        public const string GetUserApiKeyQuery = "SELECT apikey FROM users WHERE username = @user";
     }
 }
