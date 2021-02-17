@@ -10,6 +10,7 @@ namespace GW2Wrapper.Mapper
     {
         public T MapTop<T>(string toMap)
         {
+            
             try
             {
                 var options = new JsonSerializerOptions
@@ -18,8 +19,7 @@ namespace GW2Wrapper.Mapper
                     AllowTrailingCommas = true,
                     PropertyNameCaseInsensitive = true,
                 };
-                Console.WriteLine("antes do serializer");
-                T output = JsonConvert.DeserializeObject<T>(toMap);
+                var output = JsonConvert.DeserializeObject<T>(toMap);
                 //T output = JsonSerializer.Deserialize<T>(toMap, options);
                 return output;
             }

@@ -23,8 +23,8 @@ namespace Logic.Application
             Console.WriteLine(data.Commander);
             Console.WriteLine(data.Created);*/
 
-            Items items = new Items();
-            int i = items.GetId(user);
+            /*Item items = new Item();
+            int i = items.GetId(user);*/
 
         }
     }

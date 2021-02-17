@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Linq.Expressions;
 using BusinessObjects.User;
-using ConsoleUI.Validations;
-using DBManager;
-using Exceptions;
 using Logic.Application;
-using MySql.Data.MySqlClient;
 using ValidateUser = ConsoleUI.Validations.ValidateUser;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
 using Factory = BusinessObjects.Factory;
 
 
@@ -38,7 +30,7 @@ namespace ConsoleUI
                     {
                         var values = LoginController.Login(username, password);
 
-                        bool login = values.success;
+                        var login = values.success;
                         loggedUser = values.user;
                         if (login == true)
                         {
@@ -60,7 +52,7 @@ namespace ConsoleUI
                 case 2: //Registration process
                 {   
                     Console.Clear();
-                    IUser newUser = BusinessObjects.Factory.CreateUser();
+                    IUser newUser = Factory.CreateUser();
                     
                     //Gather data from the user
                     newUser = UserData.GatherNewUserData(newUser);
@@ -124,7 +116,7 @@ namespace ConsoleUI
             var result = stringTask.Result;
             Console.WriteLine(result.Content.ReadAsStringAsync().Result);*/
             
-            TestController.Test("Mystic Coin");
+            CommandsHandler.Do("search +1 Agony Infusion", apiKey);
         }
     }
 }
