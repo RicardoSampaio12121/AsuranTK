@@ -116,7 +116,7 @@ namespace ConsoleUI
             var result = stringTask.Result;
             Console.WriteLine(result.Content.ReadAsStringAsync().Result);*/
             
-            CommandsHandler.Do("search +1 Agony Infusion", apiKey);
+            CommandsHandler.Do("search Gift of Tarir", apiKey);
         }
     }
 }

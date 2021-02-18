@@ -25,6 +25,7 @@ namespace GW2Wrapper.Mapper
             }
             catch(Exception ex)
             {
+                
                 Console.WriteLine("entra na exceção");
                 Console.WriteLine(ex.Message);
                 return default(T);

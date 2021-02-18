@@ -18,8 +18,7 @@ namespace GW2Wrapper.Account
             _apiConnector = apiConnector;
             _apiMapper = apiMapper;
         }
-
-
+        
         /// <summary>
         /// Returns the id of a given item name using the gw2spidy API since ANet doesn't support that
         /// on their API
@@ -63,23 +62,28 @@ namespace GW2Wrapper.Account
             int itemId = GetId(itemName);
             
             //Search bank
+            var bank = new Bank.Bank(_apiConnector, _apiMapper);
+
+            var bankAmount = bank.GetItemAmount(itemId);
+            Console.WriteLine(bankAmount.ToString());
             
             
             //Search material storage
             
+            //Search shared inventory
             
             //Search characters inventory
 
             var charsC = Factory.InitializeCharacters(_apiConnector, _apiMapper);
             var characters = charsC.GetCharacters();
 
-            //foreach (var character in characters.Name)
-            //{
+            foreach (var character in characters.Name)
+            {
                 //Search in each character inventory
-            var inventory = new Inventory(_apiConnector, _apiMapper);
-            int i = inventory.GetItemAmount(itemId);
-            Console.WriteLine(i.ToString());
-            //}
+                var inventory = new Inventory(_apiConnector, _apiMapper);
+                int i = inventory.GetItemAmount(character, itemId);
+                Console.WriteLine(i.ToString());
+            }
             return 1;
         }
     }
