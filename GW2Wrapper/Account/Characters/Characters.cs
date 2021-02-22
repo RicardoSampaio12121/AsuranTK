@@ -2,6 +2,7 @@
 using GW2Wrapper.Connector;
 using GW2Wrapper.Mapper;
 using GW2Wrapper.Models.Account;
+using GW2Wrapper.Models.Account.Characters;
 using Newtonsoft.Json;
 
 namespace GW2Wrapper.Account.Characters

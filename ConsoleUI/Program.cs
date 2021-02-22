@@ -116,7 +116,7 @@ namespace ConsoleUI
             var result = stringTask.Result;
             Console.WriteLine(result.Content.ReadAsStringAsync().Result);*/
             
-            CommandsHandler.Do("search Gift of Tarir", apiKey);
+            CommandsHandler.Do("search Pile of Bloodstone Dust", apiKey);
         }
     }
 }

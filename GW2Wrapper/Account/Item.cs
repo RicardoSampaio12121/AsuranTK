@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using GW2Wrapper.Account.Characters;
+using GW2Wrapper.Account.Materials;
 using GW2Wrapper.Connector;
 using GW2Wrapper.Mapper;
 using GW2Wrapper.Models.Account;
@@ -63,12 +64,13 @@ namespace GW2Wrapper.Account
             
             //Search bank
             var bank = new Bank.Bank(_apiConnector, _apiMapper);
-
             var bankAmount = bank.GetItemAmount(itemId);
-            Console.WriteLine(bankAmount.ToString());
-            
+            Console.WriteLine($"Bank: {bankAmount.ToString()}");
             
             //Search material storage
+            var materialStorage = new Materials.Materials(_apiConnector, _apiMapper);
+            var materialStorageAmount = materialStorage.GetAmount(itemId);
+            Console.WriteLine($"Material storage: {materialStorageAmount.ToString()}");
             
             //Search shared inventory
             
@@ -82,7 +84,7 @@ namespace GW2Wrapper.Account
                 //Search in each character inventory
                 var inventory = new Inventory(_apiConnector, _apiMapper);
                 int i = inventory.GetItemAmount(character, itemId);
-                Console.WriteLine(i.ToString());
+                Console.WriteLine($"Character: {i.ToString()}");
             }
             return 1;
         }

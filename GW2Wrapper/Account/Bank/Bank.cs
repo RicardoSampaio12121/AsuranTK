@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * Author: Ricardo Sampaio
+ * Email: ricardo_cs@outlook.pt
+ * Date: 18/02/2021
+ * Resume: This file contains a class to interact with the v2/account/bank endpoint
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GW2Wrapper.Connector;
@@ -38,9 +45,5 @@ namespace GW2Wrapper.Account.Bank
 
             return count;
         }
-        
-        
     }
-    
-    
 }
