@@ -22,14 +22,24 @@ namespace GW2Wrapper.Account.Materials
         private IEnumerable<MaterialStorageItem> GetMaterialStorage()
         {
             var json = _apiConnector.ApiCall(MaterialsEndpoint);
-            var output = _apiMapper.MapTop<List<MaterialStorageItem>>(json);
-            return output;
+            return _apiMapper.MapTop<List<MaterialStorageItem>>(json);
         }
         
         public int GetAmount(int itemId)
         {
             var materialStorage = GetMaterialStorage();
-            return materialStorage.Where(material => material.id == itemId).Select(material => material.count).First();
+
+            foreach (var material in materialStorage.Where(material => material != null))
+            {
+                if (material.id == itemId)
+                {
+                    return material.count;
+                }
+            }
+
+            return 0;
+
+            //return materialStorage.Where(material => material.id == itemId).Select(material => material.count).First();
         }
     }
 }

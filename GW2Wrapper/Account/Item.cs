@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using GW2Wrapper.Account.Characters;
 using GW2Wrapper.Account.Materials;
+using GW2Wrapper.Account.SharedInventory;
 using GW2Wrapper.Connector;
 using GW2Wrapper.Mapper;
 using GW2Wrapper.Models.Account;
@@ -58,24 +60,24 @@ namespace GW2Wrapper.Account
         /// </summary>
         /// <param name="itemName"></param>
         /// <returns></returns>
-        public int GetAmount(string itemName)
+        public Dictionary<string, int> Search(string itemName)
         {
+            var quantities = new Dictionary<string, int>();
             int itemId = GetId(itemName);
             
             //Search bank
             var bank = new Bank.Bank(_apiConnector, _apiMapper);
-            var bankAmount = bank.GetItemAmount(itemId);
-            Console.WriteLine($"Bank: {bankAmount.ToString()}");
-            
+            quantities.Add("Bank", bank.GetItemAmount(itemId));
+
             //Search material storage
             var materialStorage = new Materials.Materials(_apiConnector, _apiMapper);
-            var materialStorageAmount = materialStorage.GetAmount(itemId);
-            Console.WriteLine($"Material storage: {materialStorageAmount.ToString()}");
-            
-            //Search shared inventory
-            
-            //Search characters inventory
+            quantities.Add("Material storage", materialStorage.GetAmount(itemId));
 
+            //Search shared inventory
+            var sharedInventory = new SharedInventory.SharedInventory(_apiConnector, _apiMapper);
+            quantities.Add("Shared inventory", sharedInventory.GetAmount(itemId));
+
+            //Search characters inventory
             var charsC = Factory.InitializeCharacters(_apiConnector, _apiMapper);
             var characters = charsC.GetCharacters();
 
@@ -83,10 +85,10 @@ namespace GW2Wrapper.Account
             {
                 //Search in each character inventory
                 var inventory = new Inventory(_apiConnector, _apiMapper);
-                int i = inventory.GetItemAmount(character, itemId);
-                Console.WriteLine($"Character: {i.ToString()}");
+                quantities.Add(character, inventory.GetItemAmount(character, itemId));
             }
-            return 1;
+            
+            return quantities; 
         }
     }
 }

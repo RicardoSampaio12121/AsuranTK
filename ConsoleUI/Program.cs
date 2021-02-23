@@ -1,6 +1,7 @@
 ﻿using System;
 using BusinessObjects.User;
 using Logic.Application;
+using Logic.Application.Commands;
 using ValidateUser = ConsoleUI.Validations.ValidateUser;
 using Factory = BusinessObjects.Factory;
 
@@ -115,8 +116,20 @@ namespace ConsoleUI
             stringTask.Wait();
             var result = stringTask.Result;
             Console.WriteLine(result.Content.ReadAsStringAsync().Result);*/
+            Console.Clear();
+            Menus.CommandsMenu();
+            decision = GetMenuDecision.ExpectIntegerMenu(1, 1);
+
+            switch (decision)
+            {
+                case 1:
+                    var itemLocations = SearchCommand.Item("Black Lion Chest", apiKey);
+                    Console.Clear();
+                    CommandsOutput.WriteSearchItem(itemLocations);
+                    break;
+            }
             
-            CommandsHandler.Do("search Pile of Bloodstone Dust", apiKey);
+            //CommandsHandler.Do("search ", apiKey);
         }
     }
 }

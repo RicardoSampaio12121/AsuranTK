@@ -25,5 +25,11 @@ namespace ConsoleUI
             Console.WriteLine("(2) REGISTER");
             Console.Write("Decision: ");
         }
+
+        public static void CommandsMenu()
+        {
+            Console.WriteLine("(1) Search item");
+            Console.Write("Decision: ");
+        }
     }
 }
