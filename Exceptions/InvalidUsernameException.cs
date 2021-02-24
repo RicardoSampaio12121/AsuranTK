@@ -2,8 +2,6 @@
  * Author: Ricardo Sampaio
  * Email: ricardo_cs@outlook.pt
  * Date: 06/02/2021
- * Resume: This file contains exceptions for when the user inputs an invalid username when
- *         making a registration
  */
 
 using System;
@@ -14,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Exceptions
 {
+    /// <summary>
+    /// Exception for when the username is invalid
+    /// </summary>
     public class InvalidUsernameException : Exception
     {
         public InvalidUsernameException()

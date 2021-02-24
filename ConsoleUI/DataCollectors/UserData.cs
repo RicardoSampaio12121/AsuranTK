@@ -1,10 +1,25 @@
-﻿using System;
+﻿/*
+ * Author: Ricardo Sampaio
+ * Email: ricardo_cs@outlook.pt
+ * Date: 04/02/2021
+ */
+
+
+using System;
 using BusinessObjects.User;
 
-namespace ConsoleUI
+namespace ConsoleUI.DataCollectors
 {
+    /// <summary>
+    /// Contains functions to gather all types of data from the user
+    /// </summary>
     public static class UserData
     {
+        /// <summary>
+        /// Gather data to create a new user
+        /// </summary>
+        /// <param name="output"></param>
+        /// <returns></returns>
         public static IUser GatherNewUserData(IUser output)
         {
             Console.Write("Username: ");
@@ -18,7 +33,11 @@ namespace ConsoleUI
 
             return output;
         }
-
+        
+        /// <summary>
+        /// Gather login data
+        /// </summary>
+        /// <returns></returns>
         public static (string, string) GatherLoginData()
         {
             Console.Write("Username: ");
@@ -30,6 +49,10 @@ namespace ConsoleUI
             return (username, password);
         }
 
+        /// <summary>
+        /// Gather command to execute
+        /// </summary>
+        /// <returns></returns>
         public static string GatherCommand()
         {
             Console.Write("% ");

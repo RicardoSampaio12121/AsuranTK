@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Exceptions
 {
+    /// <summary>
+    /// Exception for when the password is invalid
+    /// </summary>
     public class InvalidUserPasswordException : Exception
     {
         public InvalidUserPasswordException() : base(string.Format("Invalid password: password must have " +

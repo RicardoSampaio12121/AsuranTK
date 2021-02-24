@@ -2,30 +2,30 @@
  * Author: Ricardo Sampaio
  * Email: ricardo_cs@outlook.pt
  * Date: 04/02/2021
- * Resume: This file contains a class to print to the console all the menus
- *         throughout the program running in the console UI
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ConsoleUI
+namespace ConsoleUI.ConsoleOutput
 {
+    /// <summary>
+    /// Contains functions to create all the menus that can appear throughout the execution of the program
+    /// </summary>
     public static class Menus
     {
         /// <summary>
         /// Prints to the console a menu with the login and registration options
         /// </summary>
-        public static void LoginRegistationMenu()
+        public static void LoginRegistrationMenu()
         {
             Console.WriteLine("(1) LOGIN");
             Console.WriteLine("(2) REGISTER");
             Console.Write("Decision: ");
         }
-
+        
+        /// <summary>
+        /// Prints to the console all the command options
+        /// </summary>
         public static void CommandsMenu()
         {
             Console.WriteLine("(1) Search item");

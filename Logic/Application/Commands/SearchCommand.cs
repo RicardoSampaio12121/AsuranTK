@@ -11,7 +11,7 @@ namespace Logic.Application.Commands
             var connector = Factory.InitializeConnector(apiKey);
 
             var item = Factory.InitializeItem(connector, mapper);
-            return item.Search(itemName);
+            return item.Search(itemName, apiKey);
         }
     }
 }

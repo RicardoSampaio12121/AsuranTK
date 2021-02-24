@@ -6,11 +6,20 @@
  */
 
 using BusinessObjects.User;
+using ConsoleUI.ConsoleOutput;
 
 namespace ConsoleUI.Validations
 {
+    /// <summary>
+    /// Contains a function to validate a new user
+    /// </summary>
     public static class ValidateUser
     {
+        /// <summary>
+        /// Validates if the user username and password are valid
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public static bool Validate(IUser user)
         {
             bool usernameValidator = UserDataValidations.Username(user.Username);
@@ -21,7 +30,7 @@ namespace ConsoleUI.Validations
                 StandardMessages.InvalidUsernameMessage(user.Username);
                 return false;
             }
-            else if (passwordValidator == false)
+            if (passwordValidator == false)
             {
                 StandardMessages.InvalidPasswordMessage(user.Password);
                 return false;

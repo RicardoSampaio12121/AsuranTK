@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
-using GW2Wrapper.Account.Characters;
-using GW2Wrapper.Account.Materials;
-using GW2Wrapper.Account.SharedInventory;
+using System.Threading.Tasks;
 using GW2Wrapper.Connector;
 using GW2Wrapper.Mapper;
-using GW2Wrapper.Models.Account;
+using GW2Wrapper.Models.Account.Characters;
 using Newtonsoft.Json;
+using Root = GW2Wrapper.Models.Account.Root;
 
 namespace GW2Wrapper.Account
 {
@@ -53,42 +51,47 @@ namespace GW2Wrapper.Account
 
             return 0;
         }
-        
+
         /// <summary>
         /// Returns the amount of the given item that the user has in his account
         /// Goes through the bank, material storage and characters inventory
         /// </summary>
         /// <param name="itemName"></param>
+        /// <param name="apiKey"></param>
         /// <returns></returns>
-        public Dictionary<string, int> Search(string itemName)
+        public Dictionary<string, int> Search(string itemName, string apiKey)
         {
-            var quantities = new Dictionary<string, int>();
-            int itemId = GetId(itemName);
+            var output = new Dictionary<string, int>();
+            var itemId = GetId(itemName);
             
-            //Search bank
-            var bank = new Bank.Bank(_apiConnector, _apiMapper);
-            quantities.Add("Bank", bank.GetItemAmount(itemId));
+            var bank                      = Factory.InitializeBank(apiKey, _apiMapper);
+            var materialStorage   = Factory.InitializeMaterials(apiKey, _apiMapper);
+            var sharedInventory           = Factory.InitializeSharedInventory(apiKey, _apiMapper);
+            var accountCharacters         = Factory.InitializeCharacters(apiKey, _apiMapper);
+            var inventory                 = Factory.InitializeInventory(apiKey, _apiMapper);
 
-            //Search material storage
-            var materialStorage = new Materials.Materials(_apiConnector, _apiMapper);
-            quantities.Add("Material storage", materialStorage.GetAmount(itemId));
-
-            //Search shared inventory
-            var sharedInventory = new SharedInventory.SharedInventory(_apiConnector, _apiMapper);
-            quantities.Add("Shared inventory", sharedInventory.GetAmount(itemId));
-
-            //Search characters inventory
-            var charsC = Factory.InitializeCharacters(_apiConnector, _apiMapper);
-            var characters = charsC.GetCharacters();
-
+            int bankAmount = 0, materialStorageAmount = 0, sharedInventoryAmount = 0;
+            AccountCharacters characters = null;
+            
+            Parallel.Invoke
+            (
+                () => bankAmount = bank.GetItemAmount(itemId),
+                () => materialStorageAmount = materialStorage.GetAmount(itemId),
+                () => sharedInventoryAmount = sharedInventory.GetAmount(itemId),
+                () => characters = accountCharacters.GetCharacters()
+            );
+            
+            output.Add("Bank", bankAmount);
+            output.Add("Material storage", materialStorageAmount);
+            output.Add("Shared inventory", sharedInventoryAmount);
+            
             foreach (var character in characters.Name)
             {
                 //Search in each character inventory
-                var inventory = new Inventory(_apiConnector, _apiMapper);
-                quantities.Add(character, inventory.GetItemAmount(character, itemId));
+                output.Add(character, inventory.GetItemAmount(character, itemId));
             }
             
-            return quantities; 
+            return output; 
         }
     }
 }

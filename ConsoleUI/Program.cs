@@ -1,5 +1,12 @@
-﻿using System;
-using BusinessObjects.User;
+﻿/*
+ * Author: Ricardo Sampaio
+ * Email: ricardo_cs@outlook.pt
+ * Date: 28/01/2021
+ */
+
+using System;
+using ConsoleUI.ConsoleOutput;
+using ConsoleUI.DataCollectors;
 using Logic.Application;
 using Logic.Application.Commands;
 using ValidateUser = ConsoleUI.Validations.ValidateUser;
@@ -12,27 +19,24 @@ namespace ConsoleUI
     {
         private static void Main()
         {
-            bool logged = false;
-            IUser loggedUser = Factory.CreateUser();
+            var logged = false;
+            var loggedUser = Factory.CreateUser();
             
-            Menus.LoginRegistationMenu();
-            int decision = GetMenuDecision.ExpectIntegerMenu(1, 2); 
+            Menus.LoginRegistrationMenu();
+            var decision = GetMenuDecision.ExpectIntegerMenu(1, 2); 
             
             switch (decision)
             {
                 case 1: //Login process
                     Console.Clear();
-                    //Gather username and password
-                    string username, password;
-                    (username, password) = UserData.GatherLoginData();
-
-                
+                    
+                    var (username, password) = UserData.GatherLoginData();
+                    
                     try
                     {
-                        var values = LoginController.Login(username, password);
+                        var (user, login) = LoginController.Login(username, password);
 
-                        var login = values.success;
-                        loggedUser = values.user;
+                        loggedUser = user;
                         if (login == true)
                         {
                             logged = true;
@@ -41,7 +45,6 @@ namespace ConsoleUI
                         {
                             StandardMessages.FailedLogin();
                             StandardMessages.PressKeyContinueMessage();
-                            Console.ReadKey();
                         }
                     }
                     catch (Exception ex)
@@ -53,23 +56,18 @@ namespace ConsoleUI
                 case 2: //Registration process
                 {   
                     Console.Clear();
-                    IUser newUser = Factory.CreateUser();
+                    var newUser = Factory.CreateUser();
                     
-                    //Gather data from the user
                     newUser = UserData.GatherNewUserData(newUser);
                 
-                    //Validates data given from the user
-                    bool userValidator = ValidateUser.Validate(newUser);
+                    var userValidator = ValidateUser.Validate(newUser);
                     
-                    //If the data is not valid, registration process won't proceed
                     if (userValidator == false) 
                     {
                         StandardMessages.PressKeyContinueMessage();
-                        Console.ReadKey();
                         break;
                     }
                     
-                    //Tries to insert the user in the database
                     try
                     {
                         userValidator = NewUserController.Registration(newUser);
@@ -77,23 +75,18 @@ namespace ConsoleUI
                         {
                             StandardMessages.UsernameInUse(newUser.Username);
                             StandardMessages.PressKeyContinueMessage();
-                            Console.ReadKey();
                             break;
                         }
                     }
-                    catch (Exception ex) //If it can't, registration process won't proceed
+                    catch (Exception ex) 
                     {
                         Console.WriteLine($"ERROR: {ex.Message} ");
                         StandardMessages.PressKeyContinueMessage();
-                        Console.ReadKey();
                         break;
                     }
                     
-                    //Writes a message saying the user was created
                     StandardMessages.UserCreatedSuccessfully();
                     StandardMessages.PressKeyContinueMessage();
-                    Console.ReadKey();
-
                     break;
                 }
             }
@@ -103,19 +96,8 @@ namespace ConsoleUI
             
             
             
-            string apiKey = loggedUser.Apikey;
-            //TestController.Test(apiKey);
+            var apiKey = loggedUser.Apikey;
             
-            /*HttpClient _client = new HttpClient();
-            
-            _client.DefaultRequestHeaders.Clear();
-            //_client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
-            
-            string requestUri = @"http://www.gw2spidy.com/api/v0.9/json/item-search/Mystic%20Coin";
-            var stringTask = _client.GetAsync(requestUri);
-            stringTask.Wait();
-            var result = stringTask.Result;
-            Console.WriteLine(result.Content.ReadAsStringAsync().Result);*/
             Console.Clear();
             Menus.CommandsMenu();
             decision = GetMenuDecision.ExpectIntegerMenu(1, 1);
@@ -123,7 +105,7 @@ namespace ConsoleUI
             switch (decision)
             {
                 case 1:
-                    var itemLocations = SearchCommand.Item("Black Lion Chest", apiKey);
+                    var itemLocations =  SearchCommand.Item("Black Lion Chest", apiKey);
                     Console.Clear();
                     CommandsOutput.WriteSearchItem(itemLocations);
                     break;
