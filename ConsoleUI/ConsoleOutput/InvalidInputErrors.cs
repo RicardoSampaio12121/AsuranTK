@@ -16,9 +16,9 @@ namespace ConsoleUI.ConsoleOutput
         /// <summary>
         /// Writes a message informing the user that the input must be an integer
         /// </summary>
-        public static void InvalidInputFormatMessage()
+        public static void InvalidInputFormatMessage(string expected)
         {
-            Console.WriteLine("Invalid input format: input should be an integer!\n" +
+            Console.WriteLine($"Invalid input format: input should be an {expected}!\n" +
                               "Press any key to continue...");
             Console.ReadKey();
         }

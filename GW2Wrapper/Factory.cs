@@ -1,8 +1,10 @@
 ﻿using GW2Wrapper.Account;
 using GW2Wrapper.Account.Bank;
 using GW2Wrapper.Account.Characters;
-using GW2Wrapper.Account.Materials;
+using GW2Wrapper.Account.MaterialStorage;
+using GW2Wrapper.Commerce;
 using GW2Wrapper.Connector;
+using GW2Wrapper.Items;
 using GW2Wrapper.Mapper;
 using GW2Wrapper.Models.Account;
 
@@ -25,9 +27,14 @@ namespace GW2Wrapper
             return new Connector.Connector(apiKey);
         }
 
-        public static Item InitializeItem(IConnector apiConnector, IMapper apiMapper)
+        public static IConnector InitializeEmptyConnector()
         {
-            return new Item(apiConnector, apiMapper);
+            return new Connector.Connector();
+        }
+
+        public static Item InitializeItem(string apiKey)
+        {
+            return new Item(InitializeMapper(), apiKey);
         }
 
         public static Characters InitializeCharacters(string apiKey, IMapper apiMapper)
@@ -40,9 +47,9 @@ namespace GW2Wrapper
             return new Bank(InitializeConnector(apiKey), apiMapper);
         }
 
-        public static Materials InitializeMaterials(string apiKey, IMapper apiMapper)
+        public static MaterialStorage InitializeMaterials(string apiKey, IMapper apiMapper)
         {
-            return new Materials(InitializeConnector(apiKey), apiMapper);
+            return new MaterialStorage(InitializeConnector(apiKey), apiMapper);
         }
 
         public static Account.SharedInventory.SharedInventory InitializeSharedInventory(string apiKey, IMapper apiMapper)
@@ -54,6 +61,10 @@ namespace GW2Wrapper
         {
             return new Inventory(InitializeConnector(apiKey), apiMapper);
         }
-        
+
+        public static Exchange InitializeExchange()
+        {
+            return new Exchange(InitializeEmptyConnector(), InitializeMapper());
+        }
     }
 }

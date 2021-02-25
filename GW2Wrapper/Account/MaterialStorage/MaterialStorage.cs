@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using GW2Wrapper.Connector;
 using GW2Wrapper.Mapper;
 using GW2Wrapper.Models.Account.MaterialStorage;
 
-namespace GW2Wrapper.Account.Materials
+namespace GW2Wrapper.Account.MaterialStorage
 {
-    public class Materials
+    /// <summary>
+    /// Contains functions to interact with the material storage endpoint
+    /// </summary>
+    public class MaterialStorage
     {
         private readonly IConnector _apiConnector;
         private readonly IMapper _apiMapper;
         private const string MaterialsEndpoint = "v2/account/materials";
         
-        public Materials(IConnector apiConnector, IMapper apiMapper)
+        public MaterialStorage(IConnector apiConnector, IMapper apiMapper)
         {
             _apiConnector = apiConnector;
             _apiMapper = apiMapper;
@@ -38,8 +40,6 @@ namespace GW2Wrapper.Account.Materials
             }
 
             return 0;
-
-            //return materialStorage.Where(material => material.id == itemId).Select(material => material.count).First();
         }
     }
 }

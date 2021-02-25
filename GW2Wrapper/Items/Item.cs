@@ -7,17 +7,17 @@ using GW2Wrapper.Models.Account.Characters;
 using Newtonsoft.Json;
 using Root = GW2Wrapper.Models.Account.Root;
 
-namespace GW2Wrapper.Account
+namespace GW2Wrapper.Items
 {
     public class Item
     {
-        private readonly IConnector _apiConnector;
         private readonly IMapper _apiMapper;
-
-        public Item(IConnector apiConnector, IMapper apiMapper)
+        private readonly string _apiKey;
+        public Item(IMapper apiMapper, string apiKey)
         {
-            _apiConnector = apiConnector;
             _apiMapper = apiMapper;
+            _apiKey = apiKey;
+
         }
         
         /// <summary>
@@ -48,34 +48,33 @@ namespace GW2Wrapper.Account
                     }
                 }
             }
-
             return 0;
         }
-
+        
         /// <summary>
         /// Returns the amount of the given item that the user has in his account
         /// Goes through the bank, material storage and characters inventory
         /// </summary>
         /// <param name="itemName"></param>
-        /// <param name="apiKey"></param>
         /// <returns></returns>
-        public Dictionary<string, int> Search(string itemName, string apiKey)
+        public Dictionary<string, int> SearchInAccount(string itemName)
         {
             var output = new Dictionary<string, int>();
             var itemId = GetId(itemName);
+            //var itemId = item.GetId(itemName);
             
-            var bank                      = Factory.InitializeBank(apiKey, _apiMapper);
-            var materialStorage   = Factory.InitializeMaterials(apiKey, _apiMapper);
-            var sharedInventory           = Factory.InitializeSharedInventory(apiKey, _apiMapper);
-            var accountCharacters         = Factory.InitializeCharacters(apiKey, _apiMapper);
-            var inventory                 = Factory.InitializeInventory(apiKey, _apiMapper);
+            var bank                      = Factory.InitializeBank(_apiKey, _apiMapper);
+            var materialStorage           = Factory.InitializeMaterials(_apiKey, _apiMapper);
+            var sharedInventory           = Factory.InitializeSharedInventory(_apiKey, _apiMapper);
+            var accountCharacters         = Factory.InitializeCharacters(_apiKey, _apiMapper);
+            var inventory                 = Factory.InitializeInventory(_apiKey, _apiMapper);
 
             int bankAmount = 0, materialStorageAmount = 0, sharedInventoryAmount = 0;
             AccountCharacters characters = null;
             
             Parallel.Invoke
             (
-                () => bankAmount = bank.GetItemAmount(itemId),
+                () => bankAmount = bank.GetItemAmount(itemId), 
                 () => materialStorageAmount = materialStorage.GetAmount(itemId),
                 () => sharedInventoryAmount = sharedInventory.GetAmount(itemId),
                 () => characters = accountCharacters.GetCharacters()
@@ -90,7 +89,6 @@ namespace GW2Wrapper.Account
                 //Search in each character inventory
                 output.Add(character, inventory.GetItemAmount(character, itemId));
             }
-            
             return output; 
         }
     }

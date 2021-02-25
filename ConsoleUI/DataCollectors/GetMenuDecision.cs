@@ -24,7 +24,7 @@ namespace ConsoleUI.DataCollectors
         {
             if (!int.TryParse(Console.ReadLine(), out var output))
             {
-                InvalidInputErrors.InvalidInputFormatMessage();
+                InvalidInputErrors.InvalidInputFormatMessage("integer");
             }
             else if (output < minimum || output > maximum)
             {

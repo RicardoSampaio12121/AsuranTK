@@ -13,13 +13,19 @@ namespace GW2Wrapper.Connector
         
         public Connector(string apiKey)
         {
-            this._apiKey = apiKey;
+            _apiKey = apiKey;
         }
+        
+        public Connector(){}
 
         public string ApiCall(string endPoint)
         {
             _client.DefaultRequestHeaders.Clear();
-            _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
+
+            if (_apiKey != null)
+            {
+                _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
+            }
             
             string requestUri = $@"{DefaultUri}{endPoint}";
             var stringTask = _client.GetAsync(requestUri);

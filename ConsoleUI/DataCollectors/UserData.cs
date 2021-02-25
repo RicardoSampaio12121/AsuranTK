@@ -7,6 +7,7 @@
 
 using System;
 using BusinessObjects.User;
+using ConsoleUI.ConsoleOutput;
 
 namespace ConsoleUI.DataCollectors
 {
@@ -57,6 +58,20 @@ namespace ConsoleUI.DataCollectors
         {
             Console.Write("% ");
             return Console.ReadLine();
+        }
+        
+        /// <summary>
+        /// Gather the amount of gold the user wants to exchange
+        /// </summary>
+        /// <returns></returns>
+        public static int GatherGold()
+        {
+            Console.WriteLine("Gold to convert: ");
+            if(!int.TryParse(Console.ReadLine(), out var output))
+            {
+                InvalidInputErrors.InvalidInputFormatMessage("integer");
+            }
+            return output;
         }
     }
 }

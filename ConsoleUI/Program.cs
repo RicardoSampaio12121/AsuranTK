@@ -100,14 +100,27 @@ namespace ConsoleUI
             
             Console.Clear();
             Menus.CommandsMenu();
-            decision = GetMenuDecision.ExpectIntegerMenu(1, 1);
+            decision = GetMenuDecision.ExpectIntegerMenu(1, 2);
 
             switch (decision)
             {
-                case 1:
+                case 1: //Search for an item in the account
                     var itemLocations =  SearchCommand.Item("Black Lion Chest", apiKey);
                     Console.Clear();
                     CommandsOutput.WriteSearchItem(itemLocations);
+                    break;
+                
+                case 2: //Convert rate from gems and gold
+                    Menus.CurrencyConverterMenu();
+                    decision = GetMenuDecision.ExpectIntegerMenu(1, 2);
+
+                    if (decision == 1) //Convert gold to gems rate
+                    {
+                        var gold = UserData.GatherGold();
+                        var result = CurrencyConverterCommands.GoldToGems(gold);
+                        Console.WriteLine($"Gold: {result}");
+                    }
+                    
                     break;
             }
             

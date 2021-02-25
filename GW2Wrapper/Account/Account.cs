@@ -1,5 +1,8 @@
-﻿using GW2Wrapper.Connector;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using GW2Wrapper.Connector;
 using GW2Wrapper.Mapper;
+using GW2Wrapper.Models.Account.Characters;
 
 namespace GW2Wrapper.Account
 {
@@ -19,5 +22,8 @@ namespace GW2Wrapper.Account
         {
             return _apiMapper.MapTop<Models.Account.Account>(_apiConnector.ApiCall(AccountEndPoint));
         }
+        
+        
+        
     }
 }

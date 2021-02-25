@@ -10,10 +10,10 @@ namespace GW2Wrapper.Models.Account.MaterialStorage
         public string binding { get; set; } 
     }
 
-    /*public class MaterialStorage
+    public class MaterialStorage
     {
         public List<MaterialStorageItem> Items { get; set; }
-    }*/
+    }
 }
 
     

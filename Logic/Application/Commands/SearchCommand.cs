@@ -7,11 +7,8 @@ namespace Logic.Application.Commands
     {
         public static Dictionary<string, int> Item(string itemName, string apiKey)
         {
-            var mapper = Factory.InitializeMapper();
-            var connector = Factory.InitializeConnector(apiKey);
-
-            var item = Factory.InitializeItem(connector, mapper);
-            return item.Search(itemName, apiKey);
+            var item = Factory.InitializeItem(apiKey);
+            return item.SearchInAccount(itemName);
         }
     }
 }

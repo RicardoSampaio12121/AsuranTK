@@ -29,7 +29,16 @@ namespace ConsoleUI.ConsoleOutput
         public static void CommandsMenu()
         {
             Console.WriteLine("(1) Search item");
+            Console.WriteLine("(2) Currency converter");
             Console.Write("Decision: ");
+        }
+
+        public static void CurrencyConverterMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("(1) Gold to gems");
+            Console.WriteLine("(2) Gems to gold");
+            Console.WriteLine("Decision: ");
         }
     }
 }
