@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleUI.ConsoleOutput
 {
@@ -15,9 +16,11 @@ namespace ConsoleUI.ConsoleOutput
         public static void WriteSearchItem(Dictionary<string, int> output)
         {
             //TODO: organizar isto numa tabela como no bot do discord
-            foreach (var (key, value) in output)
+            TableConstructor.PrintRow("Location", "Quantity");
+            
+            foreach (var (key, value) in output.Where(value => value.Value != 0))
             {
-                Console.WriteLine($"{key}: {value}");    
+                TableConstructor.PrintRow(key, value.ToString());                
             }
         }
 

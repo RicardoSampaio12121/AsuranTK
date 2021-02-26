@@ -105,7 +105,7 @@ namespace ConsoleUI
             switch (decision)
             {
                 case 1: //Search for an item in the account
-                    var itemLocations =  SearchCommand.Item("Black Lion Chest", apiKey);
+                    var itemLocations =  SearchCommand.Item("Pile of Bloodstone Dust", apiKey);
                     Console.Clear();
                     CommandsOutput.WriteSearchItem(itemLocations);
                     break;
@@ -139,7 +139,6 @@ namespace ConsoleUI
                     break;
             }
             
-            //CommandsHandler.Do("search ", apiKey);
         }
     }
 }
