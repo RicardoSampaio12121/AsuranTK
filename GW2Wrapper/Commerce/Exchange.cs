@@ -29,16 +29,17 @@ namespace GW2Wrapper.Commerce
         public int GoldToGems(int gold)
         {
             var json = _apiConnector.ApiCall($"{DefaultEndpoint}coins?quantity={gold}");
-            var result = _apiMapper.MapTop<ExchangeModel>(json);
-            Console.WriteLine(result.Quantity.ToString());
-            Console.WriteLine(result.CoinsPerGem.ToString());
-            Console.ReadKey();
-            return result.Quantity;
+            var output = _apiMapper.MapTop<ExchangeModel>(json);
+            return output.Quantity;
         }
 
-        public static int GemsToGold()
+        public int GemsToGold(int gems)
         {
-            return 0;
+            Console.WriteLine(gems.ToString());
+            var json = _apiConnector.ApiCall($"{DefaultEndpoint}gems?quantity={gems}");
+            Console.WriteLine(json);
+            var output = _apiMapper.MapTop<ExchangeModel>(json);
+            return output.Quantity;
         }
     }
 }

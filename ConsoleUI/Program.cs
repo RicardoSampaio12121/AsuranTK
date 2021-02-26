@@ -114,12 +114,27 @@ namespace ConsoleUI
                     Menus.CurrencyConverterMenu();
                     decision = GetMenuDecision.ExpectIntegerMenu(1, 2);
 
-                    if (decision == 1) //Convert gold to gems rate
+                    switch (decision)
                     {
-                        var gold = UserData.GatherGold();
-                        var result = CurrencyConverterCommands.GoldToGems(gold);
-                        Console.WriteLine($"Gold: {result}");
+                        //Convert gold to gems rate
+                        case 1:
+                        {
+                            var gold = UserData.GatherGold();
+                            var result = CurrencyConverterCommands.GoldToGems(gold);
+                            CommandsOutput.WriteGoldToGemsExchange(result);
+                            break;
+                        }
+                        case 2:
+                        {
+                            var gems = UserData.GatherGems();
+                            var result = CurrencyConverterCommands.GemsToGold(gems);
+                            CommandsOutput.WriteGoldToGemsExchange(result);
+                            break;
+                        }
                     }
+                    break;
+                case 3:
+                    
                     
                     break;
             }

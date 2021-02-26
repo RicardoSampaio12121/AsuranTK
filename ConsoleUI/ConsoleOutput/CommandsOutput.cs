@@ -20,5 +20,15 @@ namespace ConsoleUI.ConsoleOutput
                 Console.WriteLine($"{key}: {value}");    
             }
         }
+
+        public static void WriteGoldToGemsExchange(int gems)
+        {
+            Console.WriteLine($"Gems: {gems}");
+        }
+
+        public static void WriteGemsToGoldExchange(int gold)
+        {
+            Console.WriteLine($"Gold: {gold}");
+        }
     }
 }

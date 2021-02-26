@@ -66,7 +66,21 @@ namespace ConsoleUI.DataCollectors
         /// <returns></returns>
         public static int GatherGold()
         {
-            Console.WriteLine("Gold to convert: ");
+            Console.Write("Gold to convert: ");
+            if(!int.TryParse(Console.ReadLine(), out var output))
+            {
+                InvalidInputErrors.InvalidInputFormatMessage("integer");
+            }
+            return output;
+        }
+        
+        /// <summary>
+        /// Gather the amount of gold the user wants to exchange
+        /// </summary>
+        /// <returns></returns>
+        public static int GatherGems()
+        {
+            Console.Write("Gems to convert: ");
             if(!int.TryParse(Console.ReadLine(), out var output))
             {
                 InvalidInputErrors.InvalidInputFormatMessage("integer");
