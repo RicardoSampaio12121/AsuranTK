@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GW2Wrapper.Models.Account
+namespace GW2Wrapper.Models.Items
 {
     public class SpidyId_s
     {

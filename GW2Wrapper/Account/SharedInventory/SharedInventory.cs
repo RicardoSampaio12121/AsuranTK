@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using GW2Wrapper.Connector;
 using GW2Wrapper.Mapper;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+using GW2Wrapper.Models.Account.SharedInventory;
 
 namespace GW2Wrapper.Account.SharedInventory
 {
@@ -11,7 +10,7 @@ namespace GW2Wrapper.Account.SharedInventory
     {
         private readonly IConnector _apiConnector;
         private readonly IMapper _apiMapper;
-        private const string sharedInventoryEndpoint = "v2/account/inventory";
+        private const string SharedInventoryEndpoint = "v2/account/inventory";
 
         public SharedInventory(IConnector apiConnector, IMapper apiMapper)
         {
@@ -19,28 +18,26 @@ namespace GW2Wrapper.Account.SharedInventory
             _apiMapper = apiMapper;
         }
 
-        private IEnumerable<Models.Account.SharedInventory> GetSharedInventory()
+        private List<SharedInventoryItemModel> Get()
         {
-            var json =_apiConnector.ApiCall(sharedInventoryEndpoint);
-            return _apiMapper.MapTop<List<Models.Account.SharedInventory>>(json);
+            var json =_apiConnector.ApiCall(SharedInventoryEndpoint);
+            return _apiMapper.MapTop<List<Models.Account.SharedInventory.SharedInventoryItemModel>>(json);
 
         }
 
-        public int GetAmount(int itemId)
+        public int GetItemCount(int itemId)
         {
-            var sharedInventory = GetSharedInventory();
-            int count = 0;    
-            
+            var sharedInventory = Get();
+            int count = 0;
+
             foreach (var item in sharedInventory.Where(item => item != null))
             {
-                if (item.id == itemId)
+                if (item.Id == itemId)
                 {
-                    count += item.count;
+                    count += item.Count;
                 }
             }
-
             return count;
-
         }
         
         

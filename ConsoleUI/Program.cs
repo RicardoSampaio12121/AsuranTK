@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Linq;
 using ConsoleUI.ConsoleOutput;
 using ConsoleUI.DataCollectors;
 using Logic.Application;
@@ -100,17 +101,36 @@ namespace ConsoleUI
             
             Console.Clear();
             Menus.CommandsMenu();
-            decision = GetMenuDecision.ExpectIntegerMenu(1, 2);
+            decision = GetMenuDecision.ExpectIntegerMenu(1, 20);
 
             switch (decision)
             {
-                case 1: //Search for an item in the account
-                    var itemLocations =  SearchCommand.Item("Pile of Bloodstone Dust", apiKey);
+                case 1: //Daily
+                    var tests = DailyAchievements.GetNameAndRequirements(apiKey);
+
+                    foreach (var c in tests.Keys.Where(c => c != null))
+                    {
+                        Console.WriteLine(c.ToUpper());
+
+                        foreach (var value in tests[c])
+                        {
+                            Console.WriteLine($"TITLE: {value.Item1.ToUpper()}");
+                            Console.WriteLine($"DESCRIPTION: {value.Item2.ToUpper()}");
+                           
+                        }
+
+                    }
+                   
+                    
+                    break;
+                
+                case 10: //Search for an item in the account
+                    var itemLocations =  SearchCommand.Item("Gift of Tarir", apiKey);
                     Console.Clear();
                     CommandsOutput.WriteSearchItem(itemLocations);
                     break;
                 
-                case 2: //Convert rate from gems and gold
+                case 11: //Convert rate from gems and gold
                     Menus.CurrencyConverterMenu();
                     decision = GetMenuDecision.ExpectIntegerMenu(1, 2);
 

@@ -33,6 +33,12 @@ namespace GW2Wrapper.Account.Bank
             _apiConnector = apiConnector;
             _apiMapper = apiMapper;
         }
+
+        private IEnumerable<BankItemModel> Get()
+        {
+            var json = _apiConnector.ApiCall(BankEndpoint);
+            return _apiMapper.MapTop<List<BankItemModel>>(json);
+        }
         
         /// <summary>
         /// Gets the amount of a given item that are in the account bank
@@ -41,19 +47,18 @@ namespace GW2Wrapper.Account.Bank
         /// <returns></returns>
         public int GetItemAmount(int itemId)
         {
-            var json = _apiConnector.ApiCall(BankEndpoint);
-            var bank = _apiMapper.MapTop<List<BankItem>>(json);
-            var count = 0;
-            
-            if (bank != null)
-                foreach (var item in bank.Where(item => item != null))
-                {
-                    if (item.id == itemId)
-                    {
-                        count += item.count;
-                    }
-                }
 
+            var bank = Get();
+            var count = 0;
+
+            if (bank == null) return count;
+            foreach (var item in bank.Where(item => item != null))
+            {
+                if (item.Id == itemId)
+                {
+                    count += item.Count;
+                }
+            }
             return count;
         }
     }

@@ -2,6 +2,7 @@
 using GW2Wrapper.Account.Bank;
 using GW2Wrapper.Account.Characters;
 using GW2Wrapper.Account.MaterialStorage;
+using GW2Wrapper.Achievements;
 using GW2Wrapper.Commerce;
 using GW2Wrapper.Connector;
 using GW2Wrapper.Items;
@@ -65,6 +66,16 @@ namespace GW2Wrapper
         public static Exchange InitializeExchange()
         {
             return new Exchange(InitializeEmptyConnector(), InitializeMapper());
+        }
+
+        public static Daily InitializeDaily(string apiKey)
+        {
+            return new Daily(InitializeConnector(apiKey), InitializeMapper());
+        }
+        
+        public static Achievements.Achievements InitializeAchievements()
+        {
+            return new Achievements.Achievements(InitializeEmptyConnector(), InitializeMapper());
         }
     }
 }

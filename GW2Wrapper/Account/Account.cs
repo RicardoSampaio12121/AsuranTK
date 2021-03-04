@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using GW2Wrapper.Connector;
 using GW2Wrapper.Mapper;
+using GW2Wrapper.Models.Account;
 using GW2Wrapper.Models.Account.Characters;
 
 namespace GW2Wrapper.Account
@@ -18,9 +19,9 @@ namespace GW2Wrapper.Account
             _apiMapper = apiMapper;
         }
 
-        public Models.Account.Account GetData()
+        public AccountModel Get()
         {
-            return _apiMapper.MapTop<Models.Account.Account>(_apiConnector.ApiCall(AccountEndPoint));
+            return _apiMapper.MapTop<Models.Account.AccountModel>(_apiConnector.ApiCall(AccountEndPoint));
         }
         
         

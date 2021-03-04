@@ -7,7 +7,7 @@
 using System;
 using GW2Wrapper.Connector;
 using GW2Wrapper.Mapper;
-using GW2Wrapper.Models.Account.Commerce;
+using GW2Wrapper.Models.Commerce;
 
 namespace GW2Wrapper.Commerce
 {
@@ -37,7 +37,6 @@ namespace GW2Wrapper.Commerce
         {
             Console.WriteLine(gems.ToString());
             var json = _apiConnector.ApiCall($"{DefaultEndpoint}gems?quantity={gems}");
-            Console.WriteLine(json);
             var output = _apiMapper.MapTop<ExchangeModel>(json);
             return output.Quantity;
         }

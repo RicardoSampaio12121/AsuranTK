@@ -31,14 +31,11 @@ namespace GW2Wrapper.Account.Characters
         /// Gets all the characters of an account
         /// </summary>
         /// <returns></returns>
-        public AccountCharacters GetCharacters()
+        public AccountCharactersModel Get()
         {
-            //For some reason I wasn't able to use the Mapper class to auto convert the json to an AccountCharacters 
-            //object so had to do it manually
-            //I assume it has something to do with this json is a single list [] instead of an object {}
-            string json = _apiConnector.ApiCall(CharactersEndpoint);
+            var json = _apiConnector.ApiCall(CharactersEndpoint);
             var characters = JsonConvert.DeserializeObject<List<string>>(json);
-            return new AccountCharacters {Name = characters};;
+            return new AccountCharactersModel {Name = characters};;
           
         }
     }

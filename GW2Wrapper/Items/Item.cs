@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using GW2Wrapper.Connector;
 using GW2Wrapper.Mapper;
 using GW2Wrapper.Models.Account.Characters;
 using Newtonsoft.Json;
-using Root = GW2Wrapper.Models.Account.Root;
+using Root = GW2Wrapper.Models.Items.Root;
 
 namespace GW2Wrapper.Items
 {
@@ -59,6 +60,7 @@ namespace GW2Wrapper.Items
         /// <returns></returns>
         public Dictionary<string, int> SearchInAccount(string itemName)
         {
+            //TODO: passar isto para a logic
             var output = new Dictionary<string, int>();
             var itemId = GetId(itemName);
             //var itemId = item.GetId(itemName);
@@ -70,16 +72,16 @@ namespace GW2Wrapper.Items
             var inventory                 = Factory.InitializeInventory(_apiKey, _apiMapper);
 
             int bankAmount = 0, materialStorageAmount = 0, sharedInventoryAmount = 0;
-            AccountCharacters characters = null;
+            AccountCharactersModel characters = null;
             
             Parallel.Invoke
             (
                 () => bankAmount = bank.GetItemAmount(itemId), 
-                () => materialStorageAmount = materialStorage.GetAmount(itemId),
-                () => sharedInventoryAmount = sharedInventory.GetAmount(itemId),
-                () => characters = accountCharacters.GetCharacters()
+                () => materialStorageAmount = materialStorage.GetMaterialCount(itemId),
+                () => sharedInventoryAmount = sharedInventory.GetItemCount(itemId),
+                () => characters = accountCharacters.Get()
             );
-            
+            Console.WriteLine($"Bank: {bankAmount}\n MatStorage: {materialStorageAmount}");
             output.Add("Bank", bankAmount);
             output.Add("Material storage", materialStorageAmount);
             output.Add("Shared inventory", sharedInventoryAmount);
@@ -87,7 +89,7 @@ namespace GW2Wrapper.Items
             foreach (var character in characters.Name)
             {
                 //Search in each character inventory
-                output.Add(character, inventory.GetItemAmount(character, itemId));
+                output.Add(character, inventory.GetItemCount(character, itemId));
             }
             return output; 
         }

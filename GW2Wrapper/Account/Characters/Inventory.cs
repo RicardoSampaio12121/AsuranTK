@@ -36,6 +36,14 @@ namespace GW2Wrapper.Account.Characters
         {
             return $"{InventoryEndpoint}{characterName}/inventory";
         }
+
+
+        private InventoryModel Get(string characterName)
+        {
+            var endpoint = ConstructEndpoint(characterName);
+            var json = _apiConnector.ApiCall(endpoint);
+            return _apiMapper.MapTop<InventoryModel>(json);
+        }
         
         /// <summary>
         /// Gets the amount of a given item a character has in his inventory
@@ -43,24 +51,21 @@ namespace GW2Wrapper.Account.Characters
         /// <param name="characterName"></param>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        public int GetItemAmount(string characterName, int itemId)
+        public int GetItemCount(string characterName, int itemId)
         {
-            var endpoint = ConstructEndpoint(characterName);
-            var json = _apiConnector.ApiCall(endpoint);
-            var inventory = _apiMapper.MapTop<Root>(json);
+            var inventory = Get(characterName);
             var count = 0;
             
-            foreach (var bag in inventory.bags.Where(bag => bag != null))
+            foreach (var bag in inventory.Bags.Where(bag => bag != null))
             {
-                foreach (var item in bag.inventory.Where(item => item != null))
+                foreach (var item in bag.Items.Where(item => item != null))
                 {
-                    if (item.id == itemId)
+                    if (item.Id == itemId)
                     {
-                        count += item.count;
+                        count += item.Count;
                     }
                 }
             }
-            
             return count;
         }
     }

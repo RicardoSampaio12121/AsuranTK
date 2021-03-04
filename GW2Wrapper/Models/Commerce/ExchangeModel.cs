@@ -1,4 +1,4 @@
-﻿namespace GW2Wrapper.Models.Account.Commerce
+﻿namespace GW2Wrapper.Models.Commerce
 {
     public class ExchangeModel
     {
