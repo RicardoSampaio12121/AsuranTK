@@ -5,7 +5,7 @@ namespace GW2Wrapper.Models.Achievements.Dailies
     /// <summary>
     /// Represents a pve daily achievement
     /// </summary>
-    public class PveDaily : IDailyModel
+    public class PveDailyModel : IDailyModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -5,30 +5,26 @@ using GW2Wrapper.Models.Achievements.Dailies;
 
 namespace GW2Wrapper.Achievements
 {
-    public class Daily
+    public class DailyTomorrow
     {
         private readonly IConnector _apiConnector;
         private readonly IMapper _apiMapper;
-        private const string DailyAchievementsEndpoint = "v2/achievements/daily";
+        private const string DailyTomorrowAchievementsEndpoint = "v2/achievements/daily/tomorrow";
 
-        public Daily(IConnector apiConnector, IMapper apiMapper)
+        public DailyTomorrow(IConnector apiConnector, IMapper apiMapper)
         {
             _apiConnector = apiConnector;
             _apiMapper = apiMapper;
         }
-        
-        /// <summary>
-        /// Gets the daily pve, pvp, wvw, fractals, and special events achievements
-        /// </summary>
-        /// <returns></returns>
+
         public DailyAchievementsModel Get()
         {
-            var json = _apiConnector.ApiCall(DailyAchievementsEndpoint);
+            var json = _apiConnector.ApiCall(DailyTomorrowAchievementsEndpoint);
             return _apiMapper.MapTop<DailyAchievementsModel>(json);
         }
         
         /// <summary>
-        /// Get the fractal dailies
+        /// Get the fractal dailies for tomorrow
         /// </summary>
         /// <returns></returns>
         public List<FractalDailyModel> GetFractalDailies()
@@ -38,7 +34,7 @@ namespace GW2Wrapper.Achievements
         }
         
         /// <summary>
-        /// Gets the pve dailies
+        /// Gets the pve dailies for tomorrow
         /// </summary>
         /// <returns></returns>
         public List<PveDailyModel> GetPveDailies()
@@ -48,7 +44,7 @@ namespace GW2Wrapper.Achievements
         }
         
         /// <summary>
-        /// Gets the wvw dailies
+        /// Gets the wvw dailies for tomorrow
         /// </summary>
         /// <returns></returns>
         public List<WvwDailyModel> GetWvwDailies()
@@ -58,7 +54,7 @@ namespace GW2Wrapper.Achievements
         }
 
         /// <summary>
-        /// Gets the pvp dailies
+        /// Gets the pvp dailies for tomorrow
         /// </summary>
         /// <returns></returns>
         public List<PvpDailyModel> GetPvpDailies()
@@ -68,7 +64,7 @@ namespace GW2Wrapper.Achievements
         }
         
         /// <summary>
-        /// Gets the special events dailies
+        /// Gets the special events dailies for tomorrow
         /// </summary>
         /// <returns></returns>
         public List<SpecialDailyModel> GetSpecialDailies()

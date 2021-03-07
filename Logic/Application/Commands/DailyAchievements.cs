@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DBManager.UsersDatabase.Get;
 using GW2Wrapper;
@@ -21,7 +22,7 @@ namespace Logic.Application.Commands
             //Get the name and description of the daily achievements
             var achievements = Factory.InitializeAchievements();
             _output = new Dictionary<string, IList<(string title, string description)>>();
-
+            
             Parallel.Invoke
             (
                 () => FillDailiesDictionary("pve", dailies.Pve, achievements),
@@ -40,7 +41,7 @@ namespace Logic.Application.Commands
         {
             foreach (var daily in lst)
             {
-                var achievement = achievementManager.GetAchievementById(daily.Id);
+                var achievement = achievementManager.GetAchievement(daily.Id);
                 if (!_output.ContainsKey(key))
                 {
                     _output.Add(key, new List<(string, string)> {(achievement.Name, achievement.Requirement)});

@@ -2,6 +2,10 @@
 {
     /// <summary>
     /// Represents the rewards of an achievement
+    /// If type = coins only count has a value
+    /// If type = Item only id and count has a value
+    /// If type = Mastery only id and region has a value
+    /// If type =  title only id has a value
     /// </summary>
     public class RewardModel
     {

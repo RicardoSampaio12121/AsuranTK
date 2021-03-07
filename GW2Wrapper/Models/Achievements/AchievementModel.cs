@@ -67,11 +67,11 @@ namespace GW2Wrapper.Models.Achievements
         /// Information about the progression towards the achievement
         /// </summary>
         public List<BitModel> Bits { get; set; }
-        
+
         /// <summary>
         /// The maximum number of AP that can be rewarded
         /// </summary>
-        public int PointCap { get; set; }
-        }
+        public int PointCap { get; set; } = -1;
+    }
     
 }

@@ -116,7 +116,7 @@ namespace ConsoleUI
                         {
                             Console.WriteLine($"TITLE: {value.Item1.ToUpper()}");
                             Console.WriteLine($"DESCRIPTION: {value.Item2.ToUpper()}");
-                           
+                          
                         }
 
                     }

@@ -10,7 +10,7 @@ namespace GW2Wrapper.Models.Achievements.Dailies
         /// <summary>
         /// The daily pve achievements
         /// </summary>
-        public List<PveDaily> Pve { get; set; }
+        public List<PveDailyModel> Pve { get; set; }
         
         /// <summary>
         /// The daily pvp achievements
@@ -25,7 +25,7 @@ namespace GW2Wrapper.Models.Achievements.Dailies
         /// <summary>
         /// The daily fractals achievements
         /// </summary>
-        public List<FractalDaily> Fractals { get; set; }
+        public List<FractalDailyModel> Fractals { get; set; }
         
         /// <summary>
         /// The daily special events achievements

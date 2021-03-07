@@ -5,7 +5,7 @@ namespace GW2Wrapper.Models.Achievements.Dailies
     /// <summary>
     /// Represents a single fractal daily achievement
     /// </summary>
-    public class FractalDaily : IDailyModel
+    public class FractalDailyModel : IDailyModel
     {
         /*/// <summary>
         /// The id of the achievement
