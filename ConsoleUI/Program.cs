@@ -5,11 +5,13 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using ConsoleUI.ConsoleOutput;
 using ConsoleUI.DataCollectors;
 using Logic.Application;
 using Logic.Application.Commands;
+using MySqlX.XDevAPI;
 using ValidateUser = ConsoleUI.Validations.ValidateUser;
 using Factory = BusinessObjects.Factory;
 
@@ -106,57 +108,45 @@ namespace ConsoleUI
             switch (decision)
             {
                 case 1: //Daily
-                    var tests = DailyAchievements.GetNameAndRequirements(apiKey);
-
-                    foreach (var c in tests.Keys.Where(c => c != null))
-                    {
-                        Console.WriteLine(c.ToUpper());
-
-                        foreach (var value in tests[c])
-                        {
-                            Console.WriteLine($"TITLE: {value.Item1.ToUpper()}");
-                            Console.WriteLine($"DESCRIPTION: {value.Item2.ToUpper()}");
-                          
-                        }
-
-                    }
-                   
                     
                     break;
                 
-                case 10: //Search for an item in the account
-                    var itemLocations =  SearchCommand.Item("Gift of Tarir", apiKey);
-                    Console.Clear();
-                    CommandsOutput.WriteSearchItem(itemLocations);
+                case 2: //Account
+                    
                     break;
                 
-                case 11: //Convert rate from gems and gold
-                    Menus.CurrencyConverterMenu();
-                    decision = GetMenuDecision.ExpectIntegerMenu(1, 2);
+                case 3: //Currency
+                    break;
+                
+                case 4: //Trading post
 
-                    switch (decision)
-                    {
-                        //Convert gold to gems rate
-                        case 1:
-                        {
-                            var gold = UserData.GatherGold();
-                            var result = CurrencyConverterCommands.GoldToGems(gold);
-                            CommandsOutput.WriteGoldToGemsExchange(result);
-                            break;
-                        }
-                        case 2:
-                        {
-                            var gems = UserData.GatherGems();
-                            var result = CurrencyConverterCommands.GemsToGold(gems);
-                            CommandsOutput.WriteGoldToGemsExchange(result);
-                            break;
-                        }
-                    }
                     break;
-                case 3:
-                    
-                    
+                
+                case 5: //Timers
+
                     break;
+                
+                case 6:
+
+                    break;
+                
+                case 7:
+
+                    break;
+                
+                case 8:
+
+                    break;
+                
+                case 9:
+
+                    break;
+
+                case 10:
+                    break;
+                
+               
+               
             }
             
         }

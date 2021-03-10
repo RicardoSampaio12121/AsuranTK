@@ -13,7 +13,7 @@ namespace GW2Wrapper.Achievements
     {
         private readonly IConnector _apiConnector;
         private readonly IMapper _apiMapper;
-        private const string AchievementsEndpoint = "v2/achievements";
+        private string _achievementsEndpoint = "v2/achievements/";
 
         public Achievements(IConnector apiConnector, IMapper apiMapper)
         {
@@ -30,8 +30,28 @@ namespace GW2Wrapper.Achievements
         /// <returns></returns>
         public AchievementModel GetAchievement(int id)
         {
-            var json = _apiConnector.ApiCall($"{AchievementsEndpoint}/{id.ToString()}");
+            var json = _apiConnector.ApiCall($"{_achievementsEndpoint}{id.ToString()}");
             return _apiMapper.MapTop<AchievementModel>(json);
+        }
+
+        /// <summary>
+        /// Gets the information of more than one achievement
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public List<AchievementModel> GetAchievements(params int[] ids)
+        {
+            for (int i = 0; i < ids.Length; i++)
+            {
+                _achievementsEndpoint += ids[i].ToString();
+                if (i + 1 != ids.Length)
+                {
+                    _achievementsEndpoint += ",";
+                }
+            }
+
+            var json = _apiConnector.ApiCall(_achievementsEndpoint);
+            return _apiMapper.MapTop<List<AchievementModel>>(json);
         }
         
         /// <summary>
